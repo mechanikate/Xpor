@@ -1,5 +1,5 @@
 /*
- * SHGTW v0.9.9
+ * SHGTW v0.9.99999
  * Welcome to this strange mess of code. Spoilers ahead!
  * -kate
  */
