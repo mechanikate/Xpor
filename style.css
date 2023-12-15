@@ -1,0 +1,18 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+@keyframes zoom {
+  0%   {transform: scale(1);}
+  100% {transform: scale(1000);}
+}
+@keyframes zoomundo {
+  0%   {transform: scale(1000);}
+  100% {transform: scale(1);}
+}
+.pixel-font, input::placeholder {
+    font-family: 'Silkscreen', sans-serif;
+}
+button, input[type=text] {
+    background-color: rgba(0,0,0,0);
+}

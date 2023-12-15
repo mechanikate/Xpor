@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>SHGTW v0.9.9999</title>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+      
+  </head>
+  <body>
+      <!-- THE CODE FOR SHGTW (SOMETHING HAS GONE TERRIBLY WRONG) -->
+    <div class="center">
+        <div class="pixel-font">LVL <span id="lvlval">1</span></h1>,
+            <span id="curr">0</span> KEYPRESSES, <span id="stopwatchele">00:00:00.000</span>
+            <button id="resetlvlbutton" onclick="p.doReset();"><div class="pixel-font">RESTART</div></button>
+            <br />
+            <span onclick="expandModMenu();" id="expandermodmenu"><span id="expandtext">&#11166; Mod menu</span> </span><br /> <div class="modmenu" style="display: none;"><input type="text" placeholder="Map data" id="modinput" class="modmenu"/><button class="modmenu" onclick="addMap(modinput.value);"><div class="pixel-font">Add maps</div></button> (<a href="levelmaker.html" class="modmenu">make levels here</a>)</div></span>
+        </div>
+        <h3><span id="outputter"></span></h3>
+        <h3 id="og"></h3>
+        <br />
+
+        <canvas id="canv"></canvas>
+    	<script src="mattex.js"></script>
+    	<script src="media.js"></script>
+        <script src="script.js"></script>
+        <script src="leveldata.js" defer></script>
+        <script src="stopwatch.js" defer></script>
+    </div>
+    <br />
+  </body>
+</html>
