@@ -16,3 +16,13 @@ html {
 button, input[type=text] {
     background-color: rgba(0,0,0,0);
 }
+#mapcanv {
+    position: absolute;
+    top: 25%;
+    z-index: 7;
+}
+#canv {
+    position: absolute;
+    top: 25%;
+    z-index: 8;
+}

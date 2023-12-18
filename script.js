@@ -1,5 +1,5 @@
 /*
- * SHGTW v0.9.9
+ * SHGTW v0.9.999999
  * Welcome to this strange mess of code. Spoilers ahead!
  * -kate
  */
@@ -50,6 +50,7 @@ function mazegen(xm, ym) {
 function addMap(bstr) {
     p.mapList.push(...JSON.parse(atob(bstr)));
 }
+var mapPres = new Image("mapcanv", 2000,700);
 class SHGTW extends Presentation {
   constructor(img) {
     super(img);
@@ -155,6 +156,8 @@ class SHGTW extends Presentation {
       setGCTX(p.img);
       canv.style.transformOrigin = "0% 0% 0px";
       canv.style.animation = "zoom 5s ease forwards";
+      mapcanv.style.transformOrigin = "0% 0% 0px";
+      mapcanv.style.animation = "zoom 5s ease forwards";
       window.setTimeout(() => {
         document.documentElement.style.backgroundColor = "black";
         p.lvl = 26;
@@ -165,6 +168,7 @@ class SHGTW extends Presentation {
           (e) => (e.style.color = "white")
         );
         canv.style.animation = "zoomundo 5s ease forwards";
+          mapcanv.style.animation = "zoomundo 5s ease forwards";
         [...document.querySelectorAll("input,button")].forEach((e)=>e.style.backgroundColor = "black");
           [...document.querySelectorAll("input,button")].forEach((e)=>e.style.color = "white");
       }, 6000);
@@ -216,19 +220,14 @@ class SHGTW extends Presentation {
       outputToPlayer("the fuck is this, a qr code?");
     }
     if (p.lvl == 37) outputToPlayer("ok that's actually just a qr code");
-
-    this.doReset();
+    p.doReset();
+     p.reset=true;
   }
   async doReset() {
     const that = this;
     that.playerPos = [0, 0];
     that.keystrokes = 0;
-    that.gameMap = that.mapList[that.lvl];
-    try {
-      that.yxGameMap = that.gameMap.split("\n");
-    } catch (e) {
-      console.log("game is done, probably looping now?");
-    }
+    this.gameMapBg();
   }
   async movement(evt) {
     var that = p;
@@ -294,16 +293,11 @@ class SHGTW extends Presentation {
       }
       this.playerPos = [0, 0];
       while (1) {
+        setGCTX(mapPres);
         setGCTX(p.img);
-        this.img.bg(
-          new ColorDetails(
-            p.lvl >= 26 ? "#000000" : "#ffffff",
-            p.lvl >= 26 ? "#000000" : "#ffffff"
-          )
-        );
         this.sceneGame();
         await sleep(1 / 60);
-        this.img.clear();
+        ctx.clearRect(0,0,p.img.w,p.img.h);
         if (that.reset) {
           that.reset = false;
           that.doReset();
@@ -327,10 +321,23 @@ class SHGTW extends Presentation {
     );
   }
   async gameMapBg() {
-    const that = this;
+    var that = p;
+      that.gameMap = that.mapList[that.lvl];
+      try {
+        that.yxGameMap = that.gameMap.split("\n");
+      } catch (e) {
+        console.log("game is done, probably looping now?");
+      }
     try {
-      const img = that.img;
+      const img = mapPres;
       setGCTX(img);
+        mapPres.bg(
+          new ColorDetails(
+            p.lvl >= 26 ? "#000000" : "#ffffff",
+            p.lvl >= 26 ? "#000000" : "#ffffff"
+          )
+        );
+        ctx.clearRect(0,0,img.img.width,img.img.height);
       for (var y = 0; y < that.yxGameMap.length; y++) {
         for (var x = 0; x < that.yxGameMap[y].length; x++) {
           if (that.yxGameMap[y][x] == "G") {
@@ -408,7 +415,7 @@ class SHGTW extends Presentation {
           }
         }
       }
-    } catch (e) {}
+    } catch (e) {console.log(e)}
   }
   async checkSafety() {
     try {
@@ -432,14 +439,13 @@ class SHGTW extends Presentation {
     }
   }
   async sceneGame() {
-    this.gameMapBg();
     this.renderPlayer();
     this.checkSafety();
   }
 }
 var p;
 const run = async () => {
-  p = new SHGTW(new Image("canv", 1920, 1080));
+  p = new SHGTW(new Image("canv",2000,700));
 };
 function expandModMenu() {
     [...document.getElementsByClassName("modmenu")].forEach((e)=>e.style.display=(e.style.display=="inline-block" ? "none" : "inline-block"));
@@ -448,5 +454,6 @@ function expandModMenu() {
 window.onload = () => {
   run();
   p.run();
+    p.gameMapBg();
 };
 
