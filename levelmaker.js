@@ -9,18 +9,13 @@ String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 
-window.addEventListener("keydown", function(e) {
-    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
-        e.preventDefault();
-    }
-}, false); // This should fix arrow-scrolling on Chrome/Firefox.
 
 function setCharAt(str, index, chr) {
     if (index > str.length - 1) return str;
     return str.substring(0, index) + chr + str.substring(index + 1);
 }
 var lvlList = [];
-
+var dialogueList = [];
 class OpenVS extends Presentation {
     constructor(img) {
         super(img);
@@ -45,64 +40,61 @@ class OpenVS extends Presentation {
         var that = p;
         try {
             that.map[evt.key] = evt.type == "keydown";
-            if ((that.map["w"] || that.map["ArrowUp"]) && that.playerPos[1] >= 1) {
-                evt.preventDefault();
+            if ((that.map["ArrowUp"]) && that.playerPos[1] >= 1) {                evt.preventDefault();
                 that.playerPos[1] = that.playerPos[1] - that.speed / that.img.u;
                 that.keystrokes++;
             }
             if (
-                (that.map["s"] || that.map["ArrowDown"]) &&
+                (that.map["ArrowDown"]) &&
                 p.playerPos[1] + 2 <= p.yxGameMap.length
             ) {
                 evt.preventDefault();
                 that.playerPos[1] = that.playerPos[1] + that.speed / that.img.u;
                 that.keystrokes++;
             }
-            if (that.map["d"] || that.map["ArrowRight"]) {
+            if (that.map["ArrowRight"]) {
                 evt.preventDefault();
                 if (that.playerPos[0] + 2 <= that.yxGameMap[0].length) {
                     that.playerPos[0] = that.playerPos[0] + that.speed / that.img.u;
                     that.keystrokes++;
                 }
             }
-            if ((that.map["a"] || that.map["ArrowLeft"]) && that.playerPos[0] >= 1) {
+            if ((that.map["ArrowLeft"]) && that.playerPos[0] >= 1) {
                 evt.preventDefault();
                 that.playerPos[0] = that.playerPos[0] - that.speed / that.img.u;
                 that.keystrokes++;
             }
             if (that.map["0"]) {
                 console.log("0");
-                evt.preventDefault();
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"G");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["1"]) {
-                evt.preventDefault();
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"E");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["2"]) {
-                evt.preventDefault();
+                
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"F");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["3"]) {
-                evt.preventDefault();
+                
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"W");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["4"]) {
-                evt.preventDefault();
+                
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"L");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["5"]) {
-                evt.preventDefault();
+                
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"f");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
             if (that.map["6"]) {
-                evt.preventDefault();
+                
                 p.mapList[1]=p.mapList[1].replaceAt(p.playerPos[1]*33+p.playerPos[0],"B");
                 p.yxGameMap = p.mapList[1].split("\n");
             }
@@ -257,7 +249,12 @@ function nextLvl() {
 
 function addLvl() {
     lvlList.push(p.mapList[1]);
+    dialogueList.push(dialogue.value);
+    dialogue.value="";
 }
 function exportLvl() {    
-    exportedLevel.innerHTML=btoa(JSON.stringify(lvlList));
+    var result = lvlList;
+    result = result.map((e,i) => {console.log(e,i,dialogueList[i]); return [e,dialogueList[i]]});
+    console.log(result);
+    exportedLevel.innerHTML=btoa(JSON.stringify(result));
 }
