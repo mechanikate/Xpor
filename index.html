@@ -13,23 +13,13 @@
   <body>
       <!-- THE CODE FOR SHGTW (SOMETHING HAS GONE TERRIBLY WRONG) -->
     <div class="container-div">
-        <div class="pixel-font">LVL <span id="lvlval">1</span></h1>,
-            <span id="curr">0</span> KEYPRESSES, <span id="stopwatchele">00:00:00.000</span>
-            <button id="resetlvlbutton" onclick="p.doReset();"><div class="pixel-font">RESTART</div></button>
-            <br />
-            <span onclick="expandModMenu();" id="expandermodmenu"><span id="expandtext">&#11166; Mod menu</span> </span><br /> <div class="modmenu" style="display: none;"><input type="text" placeholder="Map data" id="modinput" class="modmenu"/><button class="modmenu" onclick="addMap(modinput.value);"><div class="pixel-font">Add maps</div></button> (<a href="levelmaker.html" class="modmenu">make levels here</a>)</div></span>
-        </div>
-        <h3><span id="outputter"></span></h3>
-        <h3 id="og"></h3>
         <br />
 
-        <canvas id="canv" width="2500" height="700"></canvas>
-        <canvas id="mapcanv" width="2500" height="700"></canvas>
+        <canvas id="canv" width="250" height="70"></canvas>
+        <script src="jsnl.js"></script>
     	<script src="mattex.js"></script>
     	<script src="media.js"></script>
         <script src="script.js"></script>
-        <script src="leveldata.js" defer></script>
-        <script src="stopwatch.js" defer></script>
     </div>
     <br />
   </body>
